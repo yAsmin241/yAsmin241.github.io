@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Yasmin Batrisyia · Portfolio</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg:      #0D1117;
+      --surface: #161B22;
+      --border:  #21262D;
+      --accent:  #4ECDC4;
+      --text:    #E6EDF3;
+      --muted:   #8B949E;
+      --mono:    'JetBrains Mono', monospace;
+      --sans:    'Inter', sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--sans);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .container { max-width: 780px; margin: 0 auto; padding: 0 24px; }
+
+    /* NAV */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(13,17,23,0.88);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 14px 0;
+    }
+    nav .container { display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: var(--mono); font-size: 0.9rem; color: var(--accent); }
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { color: var(--muted); font-size: 0.875rem; font-weight: 500; transition: color .2s; }
+    .nav-links a:hover { color: var(--text); text-decoration: none; }
+
+    /* HERO */
+    .hero { padding: 100px 0 72px; }
+    .hero-eyebrow {
+      font-family: var(--mono); font-size: 0.8rem;
+      color: var(--accent); letter-spacing: .08em; margin-bottom: 16px;
+    }
+    .hero h1 {
+      font-family: var(--mono);
+      font-size: clamp(2rem, 5vw, 3.2rem);
+      font-weight: 700; line-height: 1.15; margin-bottom: 20px;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero-sub { font-size: 1.05rem; color: var(--muted); max-width: 560px; margin-bottom: 32px; }
+    .hero-tags { display: flex; gap: 10px; flex-wrap: wrap; }
+    .tag {
+      font-family: var(--mono); font-size: .75rem;
+      padding: 4px 12px; border: 1px solid var(--border);
+      border-radius: 99px; color: var(--muted);
+    }
+
+    /* SECTIONS */
+    section { padding: 72px 0; border-top: 1px solid var(--border); }
+    .section-label { font-family: var(--mono); font-size: .75rem; color: var(--accent); letter-spacing: .1em; margin-bottom: 8px; }
+    h2 { font-size: 1.5rem; font-weight: 600; margin-bottom: 32px; }
+
+    /* ABOUT */
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+    .skill-block {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 20px;
+    }
+    .skill-block h3 { font-family: var(--mono); font-size: .8rem; color: var(--accent); margin-bottom: 10px; }
+    .skill-block p { font-size: .875rem; color: var(--muted); line-height: 1.5; }
+
+    /* STAT STRIP */
+    .stat-strip {
+      display: flex; gap: 16px; flex-wrap: wrap; margin-bottom: 32px;
+    }
+    .stat-box {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 16px 24px; flex: 1; min-width: 140px;
+    }
+    .stat-box .stat-val {
+      font-family: var(--mono); font-size: 1.6rem; font-weight: 700; color: var(--accent);
+    }
+    .stat-box .stat-label { font-size: .75rem; color: var(--muted); margin-top: 2px; }
+
+    /* PROJECTS */
+    .project-card {
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 20px 24px; margin-bottom: 16px;
+      transition: border-color .2s;
+    }
+    .project-card:hover { border-color: var(--accent); }
+    .project-card h3 { font-size: .95rem; font-weight: 600; margin-bottom: 6px; }
+    .project-card p { font-size: .875rem; color: var(--muted); margin-bottom: 12px; line-height: 1.55; }
+    .proj-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+    .proj-tag {
+      font-family: var(--mono); font-size: .7rem;
+      padding: 2px 8px; background: rgba(78,205,196,.08);
+      border: 1px solid rgba(78,205,196,.2); border-radius: 4px; color: var(--accent);
+    }
+
+    /* ACHIEVEMENTS */
+    .achievement-list { list-style: none; }
+    .achievement-list li {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+      font-size: .9rem;
+    }
+    .achievement-list li:last-child { border-bottom: none; }
+    .ach-icon { color: var(--accent); font-size: 1rem; margin-top: 2px; flex-shrink: 0; }
+    .ach-date { font-family: var(--mono); font-size: .75rem; color: var(--muted); white-space: nowrap; margin-left: auto; padding-left: 16px; }
+
+    /* PIPELINE TIMELINE */
+    .pipeline { position: relative; padding-left: 32px; }
+    .pipeline::before {
+      content: ''; position: absolute;
+      left: 8px; top: 8px; bottom: 8px; width: 2px;
+      background: linear-gradient(to bottom, var(--accent), transparent);
+    }
+
+    .semester-card {
+      position: relative;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 20px 24px; margin-bottom: 20px;
+      transition: border-color .2s, transform .2s;
+    }
+    .semester-card:hover { border-color: var(--accent); transform: translateX(4px); }
+    .semester-card::before {
+      content: ''; position: absolute;
+      left: -28px; top: 22px;
+      width: 10px; height: 10px; border-radius: 50%;
+      background: var(--accent); box-shadow: 0 0 8px var(--accent);
+    }
+    .semester-card.current { border-color: rgba(78,205,196,.35); }
+    .semester-card.current::before { box-shadow: 0 0 14px var(--accent); }
+
+    .semester-label { font-family: var(--mono); font-size: .75rem; color: var(--accent); margin-bottom: 4px; }
+    .semester-card h3 { font-size: 1rem; font-weight: 600; margin-bottom: 6px; }
+    .semester-card p { font-size: .875rem; color: var(--muted); margin-bottom: 14px; }
+
+    .courses { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .course-tag {
+      font-family: var(--mono); font-size: .7rem;
+      padding: 2px 8px; background: rgba(78,205,196,.08);
+      border: 1px solid rgba(78,205,196,.2); border-radius: 4px; color: var(--accent);
+    }
+
+    .repo-link {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-family: var(--mono); font-size: .75rem; color: var(--muted);
+      border: 1px solid var(--border); border-radius: 6px; padding: 4px 10px;
+      transition: color .2s, border-color .2s;
+    }
+    .repo-link:hover { color: var(--accent); border-color: var(--accent); text-decoration: none; }
+
+    /* CONTACT */
+    .contact-row { display: flex; gap: 16px; flex-wrap: wrap; }
+    .contact-btn {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--surface); border: 1px solid var(--border);
+      border-radius: 8px; padding: 12px 20px;
+      font-size: .9rem; color: var(--text); font-weight: 500;
+      transition: border-color .2s;
+    }
+    .contact-btn:hover { border-color: var(--accent); text-decoration: none; }
+
+    footer {
+      border-top: 1px solid var(--border); padding: 32px 0;
+      text-align: center; font-family: var(--mono); font-size: .75rem; color: var(--muted);
+    }
+
+    @media (max-width: 560px) {
+      .about-grid { grid-template-columns: 1fr; }
+      .stat-strip { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="container">
+    <span class="nav-logo">yAsmin241</span>
+    <div class="nav-links">
+      <a href="#about">About</a>
+      <a href="#projects">Projects</a>
+      <a href="#semesters">Work</a>
+      <a href="#contact">Contact</a>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero" style="border:none;">
+  <div class="container">
+    <p class="hero-eyebrow">// data engineering student · UTM</p>
+    <h1>Yasmin<br><span>Batrisyia</span></h1>
+    <p class="hero-sub">
+      A proactive data engineering student at Universiti Teknologi Malaysia, seeking opportunities in
+      data engineering and data analytics. I build pipelines, dashboards, and systems that turn raw
+      data into decisions — one semester at a time.
+    </p>
+    <div class="hero-tags">
+      <span class="tag">Python</span>
+      <span class="tag">PySpark</span>
+      <span class="tag">C++</span>
+      <span class="tag">Apache Kafka</span>
+      <span class="tag">Apache Spark</span>
+      <span class="tag">MySQL</span>
+      <span class="tag">Power BI</span>
+      <span class="tag">Microsoft Azure</span>
+      <span class="tag">Docker</span>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="container">
+    <p class="section-label">// about</p>
+    <h2>Skills & Education</h2>
+
+    <div class="stat-strip">
+      <div class="stat-box">
+        <div class="stat-val">3.68</div>
+        <div class="stat-label">Current CGPA</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val">Sem 6</div>
+        <div class="stat-label">of 8 · Oct 2027 graduation</div>
+      </div>
+      <div class="stat-box">
+        <div class="stat-val">BCS</div>
+        <div class="stat-label">Data Engineering (Hons) · UTM</div>
+      </div>
+    </div>
+
+    <div class="about-grid">
+      <div class="skill-block">
+        <h3>Programming</h3>
+        <p>C++, Python, PySpark, JavaScript, PHP, Psycopg2, HTML, CSS</p>
+      </div>
+      <div class="skill-block">
+        <h3>Database Management</h3>
+        <p>MySQL, PostgreSQL, MongoDB, Oracle SQL</p>
+      </div>
+      <div class="skill-block">
+        <h3>Tools & Platforms</h3>
+        <p>Microsoft Azure, Docker, SAP BTP, Power BI, GitHub, Microsoft Excel</p>
+      </div>
+      <div class="skill-block">
+        <h3>Data Engineering</h3>
+        <p>Kafka, Spark Structured Streaming, Elasticsearch, Kibana, ETL pipelines, Medallion Architecture</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="container">
+    <p class="section-label">// projects</p>
+    <h2>Featured Work</h2>
+
+    <div class="project-card">
+      <h3>Azure End-to-End Data Engineering Real-Time Project</h3>
+      <p>Built an automated pipeline integrating on-premises SQL Server with Azure using the Medallion Architecture. Modeled data into a star schema and developed an interactive Power BI dashboard.</p>
+      <div class="proj-tags">
+        <span class="proj-tag">Microsoft Azure</span>
+        <span class="proj-tag">Medallion Architecture</span>
+        <span class="proj-tag">SQL Server</span>
+        <span class="proj-tag">Power BI</span>
+        <span class="proj-tag">Star Schema</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <h3>ETL Pipeline in Apache Spark</h3>
+      <p>Executed a PySpark ETL pipeline that extracted millions of records, enforced data quality checks, and saved outputs to Parquet format. Loaded optimized data into PostgreSQL via Docker and built analytical dashboards.</p>
+      <div class="proj-tags">
+        <span class="proj-tag">PySpark</span>
+        <span class="proj-tag">PostgreSQL</span>
+        <span class="proj-tag">Docker</span>
+        <span class="proj-tag">Parquet</span>
+        <span class="proj-tag">ETL</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <h3>High Performance Data Processing for Large-Scale Web Crawlers</h3>
+      <p>Crawled over 100,000 web listings and built an automated data quality cleaning pipeline. Conducted benchmarking analysis across multiple libraries to measure processing performance.</p>
+      <div class="proj-tags">
+        <span class="proj-tag">Web Crawling</span>
+        <span class="proj-tag">Data Quality</span>
+        <span class="proj-tag">Benchmarking</span>
+        <span class="proj-tag">Python</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <h3>AI Chatbot for Parcel FAQ</h3>
+      <p>Developed an enterprise conversational AI utilizing complex webhook integration for real-time, dynamic data retrieval. Deployed on SAP BTP and refined intent training using SAP Conversational AI.</p>
+      <div class="proj-tags">
+        <span class="proj-tag">SAP BTP</span>
+        <span class="proj-tag">SAP Conversational AI</span>
+        <span class="proj-tag">Webhook Integration</span>
+        <span class="proj-tag">NLP</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <h3>Cooperative System for KADA (Lembaga Kemajuan Pertanian Kemubu)</h3>
+      <p>Developed modules for account management, registration, loan application, and loan calculation for KADA members. Implemented backend logic using PHP MVC architecture with a MySQL database.</p>
+      <div class="proj-tags">
+        <span class="proj-tag">PHP (MVC)</span>
+        <span class="proj-tag">MySQL</span>
+        <span class="proj-tag">System Development</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ACHIEVEMENTS -->
+<section id="achievements">
+  <div class="container">
+    <p class="section-label">// leadership & achievements</p>
+    <h2>Beyond the Classroom</h2>
+    <ul class="achievement-list">
+      <li>
+        <span class="ach-icon">🏆</span>
+        <span>Best Student Leadership Award — College Student Committee, UTM</span>
+        <span class="ach-date">May 2026</span>
+      </li>
+      <li>
+        <span class="ach-icon">🏆</span>
+        <span>Best Sportswoman Award — Kolej Tun Dr. Ismail (KTDI)</span>
+        <span class="ach-date">July 2025</span>
+      </li>
+      <li>
+        <span class="ach-icon">🏊</span>
+        <span>UTM Swimming Athlete — represented UTM in SUKIPT 2024 & MASUM SIPMA 2025</span>
+        <span class="ach-date">2024 – 2025</span>
+      </li>
+      <li>
+        <span class="ach-icon">👔</span>
+        <span>Manager — UTM Swimming Team</span>
+        <span class="ach-date">Oct 2024 – present</span>
+      </li>
+      <li>
+        <span class="ach-icon">🎯</span>
+        <span>Vice President Activity — College Student Committee, KTDI</span>
+        <span class="ach-date">Oct 2024 – Oct 2025</span>
+      </li>
+      <li>
+        <span class="ach-icon">🗺️</span>
+        <span>Vice Director — Kenyalang Journey Awaits 2025 (KEJORA '25) program in Sarawak</span>
+        <span class="ach-date">Oct 2024 – June 2025</span>
+      </li>
+      <li>
+        <span class="ach-icon">🎙️</span>
+        <span>Director — Engagement with Principal and Council of Fellows, KTDI</span>
+        <span class="ach-date">Oct 2024</span>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- SEMESTERS -->
+<section id="semesters">
+  <div class="container">
+    <p class="section-label">// academic work</p>
+    <h2>Semester by Semester</h2>
+    <div class="pipeline">
+
+      <div class="semester-card">
+        <p class="semester-label">Semester 01</p>
+        <h3>Programming Foundations</h3>
+        <p>Started the journey with core programming in C++, digital logic systems, discrete mathematics, and an introduction to information technology and computing concepts.</p>
+        <div class="courses">
+          <span class="course-tag">Programming Technique</span>
+          <span class="course-tag">Discrete Structure</span>
+          <span class="course-tag">Digital Logic</span>
+          <span class="course-tag">Technology & Information System</span>
+        </div>
+        <a class="repo-link" href="https://github.com/yAsmin241/SEMESTER-1" target="_blank">⌥ yAsmin241/SEMESTER-1</a>
+      </div>
+
+      <div class="semester-card">
+        <p class="semester-label">Semester 02</p>
+        <h3>Systems, Data & Interaction</h3>
+        <p>Expanded into advanced programming, computer architecture, statistical data analysis, system analysis & design, and the fundamentals of human-computer interaction.</p>
+        <div class="courses">
+          <span class="course-tag">Programming Technique 2</span>
+          <span class="course-tag">Computer Organization & Architecture</span>
+          <span class="course-tag">Probability & Statistical Data Analysis</span>
+          <span class="course-tag">System Analysis & Design</span>
+          <span class="course-tag">Human Computer Interaction</span>
+        </div>
+        <a class="repo-link" href="https://github.com/yAsmin241/SEMESTER-2" target="_blank">⌥ yAsmin241/SEMESTER-2</a>
+      </div>
+
+      <div class="semester-card">
+        <p class="semester-label">Semester 03</p>
+        <h3>Databases, Networks & Algorithms</h3>
+        <p>Dived into relational databases, data structures & algorithms, network communication protocols, software engineering principles, and system development technologies.</p>
+        <div class="courses">
+          <span class="course-tag">Database</span>
+          <span class="course-tag">Data Structure & Algorithm</span>
+          <span class="course-tag">Network Communication</span>
+          <span class="course-tag">Software Engineering</span>
+          <span class="course-tag">System Development Technology</span>
+        </div>
+        <a class="repo-link" href="https://github.com/yAsmin241/SEMESTER-3" target="_blank">⌥ yAsmin241/SEMESTER-3</a>
+      </div>
+
+      <div class="semester-card">
+        <p class="semester-label">Semester 04</p>
+        <h3>Data Analytics & Mining</h3>
+        <p>Stepped into data science territory — analytics programming with Python (Jupyter Notebooks), data mining techniques, object-oriented programming, and operating systems concepts.</p>
+        <div class="courses">
+          <span class="course-tag">Data Analytics Programming</span>
+          <span class="course-tag">Data Mining</span>
+          <span class="course-tag">Object Oriented Programming</span>
+          <span class="course-tag">Operating System</span>
+        </div>
+        <a class="repo-link" href="https://github.com/yAsmin241/SEMESTER-4" target="_blank">⌥ yAsmin241/SEMESTER-4</a>
+      </div>
+
+      <div class="semester-card">
+        <p class="semester-label">Semester 05</p>
+        <h3>AI, Enterprise Systems & Database Programming</h3>
+        <p>Explored artificial intelligence concepts, advanced database programming, and enterprise system design & modeling — bridging theory with real-world system architecture.</p>
+        <div class="courses">
+          <span class="course-tag">Artificial Intelligence</span>
+          <span class="course-tag">Database Programming</span>
+          <span class="course-tag">Enterprise System Design & Modeling</span>
+        </div>
+        <a class="repo-link" href="https://github.com/yAsmin241/SEMESTER-5" target="_blank">⌥ yAsmin241/SEMESTER-5</a>
+      </div>
+
+      <div class="semester-card current">
+        <p class="semester-label">Semester 06 · Current</p>
+        <h3>Real-Time Pipelines & Business Intelligence</h3>
+        <p>Built a Kafka–Spark Structured Streaming sentiment analysis pipeline with Elasticsearch & Kibana dashboards. Implemented an Azure Databricks medallion architecture (Bronze→Silver→Gold) for inventory analytics. Developed a Power BI Sales KPI dashboard and completed an HCI project.</p>
+        <div class="courses">
+          <span class="course-tag">High Performance Data Processing</span>
+          <span class="course-tag">Business Intelligence</span>
+          <span class="course-tag">Human Computer Interaction</span>
+          <span class="course-tag">Database Systems</span>
+        </div>
+        <a class="repo-link" href="https://github.com/yAsmin241/SEMESTER-6" target="_blank">⌥ yAsmin241/SEMESTER-6</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <p class="section-label">// contact</p>
+    <h2>Get in touch</h2>
+    <div class="contact-row">
+      <a class="contact-btn" href="https://github.com/yAsmin241" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.387.6.113.82-.263.82-.583 0-.288-.012-1.243-.012-2.252-3.338.724-4.042-1.416-4.042-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.083 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.419-1.305.762-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/>
+        </svg>
+        GitHub
+      </a>
+      <a class="contact-btn" href="mailto:ybzahiruddin@gmail.com">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <rect x="2" y="4" width="20" height="16" rx="2"/>
+          <path d="m2 7 10 7 10-7"/>
+        </svg>
+        ybzahiruddin@gmail.com
+      </a>
+      <a class="contact-btn" href="https://www.linkedin.com/in/yasmin-batrisyia-zahiruddin" target="_blank">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor">
+          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+        </svg>
+        LinkedIn
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="container">
+    built with ♥ by Yasmin Batrisyia · 2026
+  </div>
+</footer>
+
+</body>
+</html>
